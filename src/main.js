@@ -14,11 +14,12 @@ import { renderImages, showLoader,
  let page = 1;
  const perPage = 15;
  const moreBtn = document.querySelector('.load-more');
+ let inputValue = '';
  
  form.addEventListener('submit', async (event) => {
      event.preventDefault();
      
-     const inputValue = form.elements.query.value.trim();
+     inputValue = form.elements.query.value.trim();
  
      if(inputValue === '') {
          iziToast.error({
@@ -78,7 +79,15 @@ import { renderImages, showLoader,
 
  moreBtn.addEventListener('click', async () => {
     page += 1;
-    const inputValue = form.elements.query.value.trim();
+    
+    if(inputValue === '') {
+        iziToast.error({
+            title: '',
+            message: 'Query is invalid! Please enter search parameters!',
+            position: 'topRight'  
+        });
+        return;
+    }
    
     try {
         showLoader();
@@ -86,7 +95,7 @@ import { renderImages, showLoader,
         renderImages(images);
         lightbox.refresh();
 
-        hideLoader();
+        // hideLoader();
         smoothScroll();
 
         if(images.hits.length < perPage) {

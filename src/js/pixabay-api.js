@@ -1,5 +1,6 @@
 'use strict';
 import axios from "axios";
+import { hideLoader, hideMore } from "./render-function";
 export const BASE_URL = 'https://pixabay.com/api/';
 export const API_KEY = '46311357-e3a4e4c71d54a60b91a510c1d';
 
@@ -19,6 +20,8 @@ try {
 
    return response.data;
 } catch (error) {
+    hideMore();
+    hideLoader();
     console.log(error);
     throw error;
 }    
